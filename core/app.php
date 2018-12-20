@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__."/controller.php";
-require_once __DIR__."/view.php";
+//require_once __DIR__."/view.php";
 require_once __DIR__."/lib.php";
 
 interface iapp_event_handler
