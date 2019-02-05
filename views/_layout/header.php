@@ -1,5 +1,5 @@
 <?php
-$app_name = "MVC App";
+
 $title = "MVC Title";
 if (defined('_page_title')) {
     $title = _page_title . " - " . $title;

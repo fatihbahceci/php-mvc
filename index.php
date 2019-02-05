@@ -35,10 +35,12 @@ class handler_test implements iapp_event_handler
     }
     public function render_header()
     {
+        $app_name = "MVC App";
         require_once _views."/_layout/header.php";
     }
     public function render_footer()
     {
+        $app_name = "MVC App";
         require_once  _views."/_layout/footer.php";
 
     }
