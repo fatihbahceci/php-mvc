@@ -34,6 +34,7 @@ class homeController extends controller
         // echo "<p>".$_SERVER['REQUEST_URI']."</p>";
         // echo "<p>".$_SERVER['HTTP_HOST']."</p>";
         // echo "<p>Get:".print_r($_GET,true)."</p>";
+        $this->title("Home");
         if (srv::isPost()) {
             $this->render("home", "index", $_POST);
      
