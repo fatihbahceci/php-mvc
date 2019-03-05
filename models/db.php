@@ -81,6 +81,11 @@ class db
         return $sth->execute($params);
     }
 
+    public function querySingleField($query, array $params = [])
+    {
+        $sth = $this->db->prepare($query);
+        return $sth->execute($params)[0];
+    }
     public function exec($query, array $params = [], bool $returnLastInsertId = false)
     {
         $stmt = $this->db->prepare($query);
