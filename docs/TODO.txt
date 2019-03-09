@@ -1,0 +1,10 @@
+1. Config parametleri için açıklama
+2. controller, db, app classları için açıklama
+
+
+tempdata viewbag kavramları için çalışma
+$model değişkeni için daha iyi birşy yapılabilir mi?
+redirect medtodunun geliştirilmesi
+javascript kütüphanesi
+
+

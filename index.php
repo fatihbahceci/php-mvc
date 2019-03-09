@@ -15,6 +15,14 @@ define('_controllers', _app . '/controllers'); // Controller dizini
 define('_views', _app . '/views'); // Views dizini
 define('_models', _app . '/models'); //Models dizini
 
+//10 minutes
+define('_session_timeout', 600);
+
+//database
+define('_db_connection_string', 'mysql:host=localhost;dbname=YOUR_DATABASE_NAME;charset=utf8');
+define('_db_user_name', 'USER_NAME');
+define('_db_password', 'PASSWORD');
+
 
 require_once _core . "/app.php";
 
