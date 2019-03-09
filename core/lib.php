@@ -18,6 +18,14 @@ class srv
     {
         return $_SERVER['REQUEST_METHOD'] === 'POST';
     }
+
+    public static function postData(){
+        return $_POST;
+    }
+
+    public static function postValue($name) {
+        return static::postData()[$name];
+    }
 }
 
 class convert
@@ -43,6 +51,7 @@ class arrays
 
 class tags
 {
+    
     public static function pre($s, $return = false)
     {
         if ($return) {
@@ -60,6 +69,29 @@ class tags
             echo ("<h$level>" . print_r($s, true) . "</h$level>");
         }
     }
+
+    public static function raw($s, $return = false)
+    {
+        if ($return) {
+            return print_r($s, true);
+        } else {
+            echo (print_r($s, true));
+        }
+    }
+
+    //TODO: Daha sonra "" gibi işaretler için önlem alınıp alınmayucağına bakılacak
+    /**
+     * input için value üretir
+     */
+    public static function inputValue($s , $return = false) {
+        if ($return) {
+            return print_r($s, true);
+        } else {
+            echo (print_r($s, true));
+        }
+    }
+
+
 }
 
 class sys
@@ -112,6 +144,7 @@ class session
     }
 
     public static function getAndDelete(String $key) {
+        static::checkTimeout();
         $r = static::get($key);
         static::set($key,null);
         return $r;
