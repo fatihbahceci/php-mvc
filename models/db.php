@@ -78,13 +78,13 @@ class db
     public function query($query, array $params = [])
     {
         $sth = $this->db->prepare($query);
-        return $sth->execute($params);
+        $sth->execute($params);
+        return $sth->fetch();
     }
 
     public function querySingleField($query, array $params = [])
     {
-        $sth = $this->db->prepare($query);
-        return $sth->execute($params)[0];
+        return $this->query($query, $params)[0];
     }
     public function exec($query, array $params = [], bool $returnLastInsertId = false)
     {
@@ -100,6 +100,5 @@ class db
         } else {
             return $this->db->lastInsertId();
         }
-
     }
 }
