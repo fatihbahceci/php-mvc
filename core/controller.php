@@ -23,7 +23,7 @@ class controller
     aware that you should extract in the same order that's defined
     in variables_order within the php.ini.
      */
-    public function render($controller, $action, $model = null , controllerExt $extra = null)
+    public function render($controller, $action, $model = null, controllerExt $extra = null)
     {
 
         /**
@@ -93,19 +93,19 @@ class controller
     {
         define("_page_title", $title);
     }
-/**
+    /**
  * @param array buttons [["Text", "/link"],...]
  */
     public function buildErrorMessage($message, array $buttons, $title = "Hata!")
     {
         return
             [
-            "type" => "error",
-            "title" => $title,
-            "message" => $message,
-            "buttons" => $buttons,
-        ];
-/*
+                "type" => "error",
+                "title" => $title,
+                "message" => $message,
+                "buttons" => $buttons,
+            ];
+        /*
 [
 "type" => "error",
 "title" => "Geçersiz seçim",
@@ -164,5 +164,15 @@ class controllerExt
             array_push($this->success, $l);
         }
         return $this;
+    }
+
+    public static function renderBSAlert($m)
+    {
+        if ($m != null) {
+            require_once _root.'/lib/bootstrap4/bsalert.php';
+            foreach ($m->errors as $e) bsalert::error($e);
+            foreach ($m->warnings as $e) bsalert::warning($e);
+            foreach ($m->success as $e) bsalert::success($e);
+        }
     }
 }
