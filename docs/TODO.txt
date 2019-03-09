@@ -9,3 +9,5 @@ javascript kütüphanesi
 
 Auth::checkLoggedIn() için kullanım. 
 Auth::checkRule(ruleName) ekle. Bunun için session ile (veya başka bir store) eşlenik çalışması lazım
+
+area ekle
