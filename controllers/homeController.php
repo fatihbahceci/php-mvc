@@ -36,10 +36,10 @@ class homeController extends controller
         // echo "<p>Get:".print_r($_GET,true)."</p>";
         $this->title("Home");
         if (srv::isPost()) {
-            $this->render("home", "index", $_POST);
+            $this->render($_POST);
      
         } else {
-            $this->render("home", "index");
+            $this->render();
         }
 
     }

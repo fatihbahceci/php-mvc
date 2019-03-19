@@ -79,10 +79,10 @@ class app
                 require_once $file;
                 $controllerName = $this->controller . "Controller";
                 if (class_exists($controllerName)) {
-
                     $controller = new $controllerName;
-                    $controller->setHandler($this->handler);
                     if (method_exists($controller, $this->action)) {
+                        $controller->setHandler($this->handler);
+                        $controller->init($this->area, $this->controller, $this->action);
                         // controller ve metodu çağırıyoruz
                         //call_user_func_array her bir elemanı bir parametre olarak gönder
                         //call_user_func: tüm elemanları tek bir complex olarak gönder

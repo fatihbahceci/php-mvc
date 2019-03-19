@@ -1,6 +1,15 @@
 <?php
 class controller
 {
+    protected $area;
+    protected $controller;
+    protected $action;
+    public function init($area, $controller, $action)
+    {
+        $this->area  = $area;
+        $this->controller  = $controller;
+        $this->action  = $action;
+    }
     /**
      * @var iapp_event_handler
      */
@@ -23,42 +32,67 @@ class controller
     aware that you should extract in the same order that's defined
     in variables_order within the php.ini.
      */
-    public function render($controller, $action, $model = null, controllerExt $extra = null)
-    {
-
-        /**
+    private function internalRender(
+        $area = null,
+        $controller = null,
+        $action = null,
+        $model = null,
+        controllerExt $extra = null
+    ) {
+        $a =  str::isNullOrEmpty($area) ?  $this->area : $area;
+        $c =  str::isNullOrEmpty($controller) ?  $this->controller : $controller;
+        $ac =  str::isNullOrEmpty($action) ?  $this->action : $action;
+        $path = _views;
+        //Eğer area boş ise veya dolu ve klasör mevcut ise 
+        if (
+            str::isNullOrEmpty($a) ||
+            !str::isNullOrEmpty($a) && sys::isFolderExists($path .= "/$a")
+        ) {
+            /**
          * Eğer dosya varsa
          */
-        if (file_exists($file = _views . "/{$controller}/{$action}.php")) {
-            /**
+            if (file_exists($file = $path . "/{$c}/{$ac}.php")) {
+                /**
              * $params dizesindeki verileri extract fonksiyonu
              * ile değişken haline döndürüyoruz
              */
-            //extract($params); //Yukarıdaki açıklamadan dolayı yapmıyoruz.
+                //extract($params); //Yukarıdaki açıklamadan dolayı yapmıyoruz.
 
-            /**
+                /**
              * Çıktı tamponlamasını başlatıyoruz
              */
-            ob_start();
-            if ($this->handler != null) {
-                $this->handler->render_header();
-            }
+                ob_start();
+                if ($this->handler != null) {
+                    $this->handler->render_header();
+                }
 
-            /**
+                /**
              * View dosyası içeriğini çağırıyoruz
              */
-            require $file;
-            if ($this->handler != null) {
-                $this->handler->render_footer();
-            }
+                require $file;
+                if ($this->handler != null) {
+                    $this->handler->render_footer();
+                }
 
-            /**
+                /**
              * Çıktı tamponun içeriğini döndürüp siliyoruz
              */
-            echo ob_get_clean();
+                echo ob_get_clean();
+            } else {
+                exit("View dosyası bulunamadı: $file $a/$c/$ac");
+            }
         } else {
-            exit("View dosyası bulunamadı: /{$controller}/{$action}");
+            exit("Klasör bulunamadı: $a/$c/$ac");
         }
+    }
+    public function render($model = null, controllerExt $extra = null)
+    {
+        $this->internalRender(null, null, null, $model, $extra);
+    }
+
+    public function renderView($controller, $action, $model = null, controllerExt $extra = null)
+    {
+        $this->internalRender(null, $controller, $action, $model, $extra);
     }
 
     /**
@@ -169,7 +203,7 @@ class controllerExt
     public static function renderBSAlert($m)
     {
         if ($m != null) {
-            require_once _root.'/lib/bootstrap4/bsalert.php';
+            require_once _root . '/lib/bootstrap4/bsalert.php';
             foreach ($m->errors as $e) bsalert::error($e);
             foreach ($m->warnings as $e) bsalert::warning($e);
             foreach ($m->success as $e) bsalert::success($e);
