@@ -107,6 +107,11 @@ class sys
         //0.21385600 1546067709
         return $t[1] . substr($t[0], 2);
     }
+
+    public static function isFolderExists($path)
+    {
+        return file_exists($path) && is_dir($path);
+    }
 }
 
 
