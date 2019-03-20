@@ -1,6 +1,6 @@
 <?php
 
-$title = "MVC Title";
+$title = $app_name;
 if (defined('_page_title')) {
     $title = _page_title . " - " . $title;
 }
@@ -35,7 +35,7 @@ if (defined('_page_title')) {
     <ul class="navbar-nav">
     <?//if (C::isLoggedIn()): ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="/admin/login">Giriş</a>
+                        <a class="nav-link" href="/admin/home/index">Admin (area)</a>
                     </li>
                     <?//endif;?>
     </ul>

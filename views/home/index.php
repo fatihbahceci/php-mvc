@@ -1,7 +1,8 @@
 <?$model = (object)$model;?>
-<h2>Ana Sayfa</h2>
-<h2>Post Alanı</h2>
+<h2>Home</h2>
+<h2>Try Post Area</h2>
 <pre>
+  <h4>Post Result</h4>
     <? echo print_r($model, true); ?>
 </pre>
 <form class="form-horizontal" action="/home/index" method="post" id="sendURL">
@@ -15,7 +16,8 @@
   <label class="col-md-4 control-label" for="textinput">Name</label>  
   <div class="col-md-4">
   <input id="textinput" name="textinput" type="text" placeholder="What's u'r name" class="form-control input-md" required="">
-  <span class="help-block">Just i wanna your name man</span>  
+  <span class="help-block">A name is a term used for identification. 
+    Names can identify a class or category of things.</span>  
   </div>
 </div>
 
