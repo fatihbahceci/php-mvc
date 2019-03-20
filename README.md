@@ -1,4 +1,5 @@
 
+
 # php-mvc
 Php ile kodlamayı kolaylaştırmak için oluşturulan br mvc şablonudur 
 
@@ -112,5 +113,5 @@ Aşağıdaki nginx config dosyası çalışan bir VestaCP örneğidir
         include     /etc/nginx/conf.d/webmail.inc*;
     
         include     /home/admin/conf/web/nginx.phpmvc.com.conf*;
+    }
 
-}
