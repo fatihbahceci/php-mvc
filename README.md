@@ -7,42 +7,6 @@ Php ile kodlamayı kolaylaştırmak için oluşturulan br mvc şablonudur
 
 Düzgün çalışması için bütün requestler index.php dosyasına yönlendirilmelidir. 
 
-## apache için mod_rewrite ile yapılabilir.
-Örnek
-
-    RewriteEngine on
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^(.*)$ /index.php?path=$1 [NC,L,QSA]
-
-Kaynak: [https://stackoverflow.com/a/18406686/4546246](https://stackoverflow.com/a/18406686/4546246)
-
-## nginx için config dosyası ile yapılmalıdır.
-
-    location / {
-        set $page_to_view "/index.php";
-        try_files $uri $uri/ @rewrites;
-        root   /var/www/site;
-        index  index.php index.html index.htm;
-    }
-    
-    location ~ \.php$ {
-        include /etc/nginx/fastcgi_params;
-        fastcgi_pass  127.0.0.1:9000;
-        fastcgi_index index.php;
-        fastcgi_param SCRIPT_FILENAME /var/www/site$page_to_view;
-    }
-    
-    # rewrites
-    location @rewrites {
-        if ($uri ~* ^/([a-z]+)$) {
-            set $page_to_view "/$1.php";
-            rewrite ^/([a-z]+)$ /$1.php last;
-        }
-    }
-
-Kaynak: [https://stackoverflow.com/a/12931128/4546246](https://stackoverflow.com/a/12931128/4546246)
-
 ## VestaCP kullanıyorsanız web template'i wordpress2_rewrite yapmanız yeterlidir.
 
 Aşağıdaki nginx config dosyası çalışan bir VestaCP örneğidir
@@ -114,4 +78,41 @@ Aşağıdaki nginx config dosyası çalışan bir VestaCP örneğidir
     
         include     /home/admin/conf/web/nginx.phpmvc.com.conf*;
     }
+
+**Aşağıdaki Örnekler muhtemelen düzgün çalışmayacaktır** Düzgün çalışması için yukarıdaki gibi **q=$1** formatında rewrite yapmanız gerekmektedir. Örnek rewrite `^(.+)$ /index.php?q=$1 last;`
+## apache için mod_rewrite ile yapılabilir.
+Örnek
+
+    RewriteEngine on
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ /index.php?path=$1 [NC,L,QSA]
+
+Kaynak: [https://stackoverflow.com/a/18406686/4546246](https://stackoverflow.com/a/18406686/4546246)
+
+## nginx için config dosyası ile yapılmalıdır.
+
+    location / {
+        set $page_to_view "/index.php";
+        try_files $uri $uri/ @rewrites;
+        root   /var/www/site;
+        index  index.php index.html index.htm;
+    }
+    
+    location ~ \.php$ {
+        include /etc/nginx/fastcgi_params;
+        fastcgi_pass  127.0.0.1:9000;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME /var/www/site$page_to_view;
+    }
+    
+    # rewrites
+    location @rewrites {
+        if ($uri ~* ^/([a-z]+)$) {
+            set $page_to_view "/$1.php";
+            rewrite ^/([a-z]+)$ /$1.php last;
+        }
+    }
+
+Kaynak: [https://stackoverflow.com/a/12931128/4546246](https://stackoverflow.com/a/12931128/4546246)
 
